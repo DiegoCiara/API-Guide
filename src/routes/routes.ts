@@ -1,9 +1,8 @@
 import { ensureAuthenticated } from '@middlewares/ensureAuthenticated';
 import Router from 'express';
-import MemberAuthRoutes from './memberauth.routes';
 import AuthRoutes from './auth.routes';
-import ProductRoutes from './product.routes';
-import MemberRoutes from './member.routes';
+import PageRoutes from './page.routes';
+import SectionRoutes from './section.routes';
 import UserRoutes from './user.routes';
 
 const routes = Router();
@@ -13,10 +12,9 @@ routes.get('/', (req, res) => {
 });
 
 // prefix
-routes.use('/member-auth', MemberAuthRoutes);
 routes.use('/auth', AuthRoutes);
 routes.use('/user', UserRoutes);
-routes.use('/member', MemberRoutes);
-routes.use('/product', ProductRoutes); 
+routes.use('/page', PageRoutes); 
+routes.use('/section', SectionRoutes); 
 
 export default routes;

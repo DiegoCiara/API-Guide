@@ -1,4 +1,5 @@
 import Page from '@entities/Page';
+import Sections from '@entities/Section';
 import queryBuilder from '@utils/queryBuilder';
 import { Request, Response } from 'express';
 
@@ -18,6 +19,7 @@ class PageController {
     }
   }
 
+  
   public async findById(req: Request, res: Response): Promise<Response> {
     try {
       const id = req.params.id;
@@ -25,16 +27,28 @@ class PageController {
       if (!id) return res.status(400).json({ message: 'Please send a page id' });
 
       const page = await Page.findOne(id, queryBuilder(req.query));
+      if (!page) return res.status(404).json({ message: 'Cannot find page' });
 
-      return res.status(200).json(page);
+      // Buscar todas as seções associadas a esta página
+      const sections = await Sections.find({ where: { page: id } });
+
+      // Estruturar a resposta incluindo o nome da página e as seções como 'content'
+      const response = {
+        page: page.name,
+        content: sections
+      };
+
+      return res.status(200).json(response);
     } catch (error) {
       return res.status(404).json({ message: 'Cannot find pages, try again' });
     }
   }
 
+
   public async create(req: Request, res: Response): Promise<Response> {
     try {
       const { name }: PageInterface = req.body;
+      
 
       if (!name) return res.status(400).json({ message: 'Invalid page name' });
 

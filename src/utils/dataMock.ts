@@ -60,6 +60,12 @@ const funnels = [
   },
 ]
 
+const pages = [
+  {
+    name: 'Bem Vindo',
+  },
+]
+
 const users = [
   {
     name: 'Suporte Técnico',
@@ -171,4 +177,4 @@ const deals4 = [
   },
 ];
 
-export { companies, evaluation, contacts, product, users, convenios, funnels, contracts, partners, goal, deals, member, exercice, workout, automations, mailers,deals2, deals3, deals4 };
+export { companies, pages, evaluation, contacts, product, users, convenios, funnels, contracts, partners, goal, deals, member, exercice, workout, automations, mailers,deals2, deals3, deals4 };
