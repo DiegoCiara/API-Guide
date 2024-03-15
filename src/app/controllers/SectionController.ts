@@ -6,6 +6,14 @@ import { Request, Response } from 'express';
 interface SectionInterface {
   id?: string;
   head?: string;
+  isCard: boolean;
+  divisor: boolean;
+  icon: string;
+  title: string;
+  subtitle: string;
+  paragraph:string;
+  phrase: string;
+  code: string;
   page?: Pages;
 }
 
@@ -33,18 +41,40 @@ class SectionController {
       return res.status(404).json({ message: 'Cannot find sections, try again' });
     }
   }
-public async create(req: Request, res: Response): Promise<Response> {
+  public async create(req: Request, res: Response): Promise<Response> {
     try {
-        const { head }: SectionInterface = req.body;
+        const { 
+
+          head,
+          isCard,
+          divisor,
+          icon,
+          title,
+          subtitle,
+          paragraph,
+          phrase,
+          code,
+         }: SectionInterface = req.body;
         const id = req.params.id;
 
-        if (!head) return res.status(400).json({ message: 'Invalid section head' });
+        // if (!head) return res.status(400).json({ message: 'Invalid section head' });
         
         // Certifique-se de aguardar a resolução da Promise antes de usá-la
         const page = await Pages.findOne(id); // Agora 'page' é do tipo 'Pages' e não 'Promise<Pages>'
 
         // Agora você pode passar 'page' diretamente, pois ela já está resolvida
-        const section = await Section.create({ head, page }).save();
+        const section = await Section.create({
+           head, 
+           isCard,
+           divisor,
+           icon,
+           title,
+           subtitle,
+           paragraph,
+           phrase,
+           code,
+           page 
+        }).save();
 
         if (!section) return res.status(400).json({ message: 'Cannot create section' });
 
@@ -56,7 +86,17 @@ public async create(req: Request, res: Response): Promise<Response> {
 
   public async update(req: Request, res: Response): Promise<Response> {
     try {
-      const { head }: SectionInterface = req.body;
+      const { 
+        head, 
+        isCard,
+        divisor,
+        icon,
+        title,
+        subtitle,
+        paragraph,
+        phrase,
+        code
+       }: SectionInterface = req.body;
       const id = req.params.id;
 
       const section = await Section.findOne(id);
@@ -65,6 +105,14 @@ public async create(req: Request, res: Response): Promise<Response> {
 
       const valuesToUpdate: SectionInterface = {
         head: head || section.head,
+        isCard: isCard || section.isCard,
+        divisor: divisor || section.divisor,
+        icon: icon || section.icon,
+        title: title || section.title,
+        subtitle: subtitle || section.subtitle,
+        paragraph: paragraph || section.paragraph,
+        phrase: phrase || section.phrase,
+        code: code || section.code,
       };
 
       await Section.update(id, { ...valuesToUpdate });
