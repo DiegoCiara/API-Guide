@@ -105,8 +105,8 @@ class SectionController {
 
       const valuesToUpdate: SectionInterface = {
         head: head || section.head,
-        isCard: isCard || section.isCard,
-        divisor: divisor || section.divisor,
+        isCard: isCard == true ? true : false,
+        divisor: divisor == true ? true : false,
         icon: icon || section.icon,
         title: title || section.title,
         subtitle: subtitle || section.subtitle,
